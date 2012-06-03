@@ -1,20 +1,23 @@
 <%= javascript_tag :defer => 'defer' do -%>
-  function search(){
-    alert($("#input_search").val());
-  }
+  //funzione che alla pressione di invio della barra di ricerca richiama in get la pagina index
+  $('#input_search').keypress(function(e){
+    if(e.which == 13){
+     $('form#search').submit();
+     }
+  });
 <% end -%>
 
 <h1>Listing users</h1>
 
-<input id="input_search" type="text" name="search" onkeyup="search()">
+<form method="get" action="/users" id="search">
+  <input id="input_search" type="text" placeholder="Search..." val="" name="input_search">
+</form>
 
-<table>
+<table id="users">
   <tr>
     <th>First name</th>
     <th>Last name</th>
     <th>Telephone number</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
 
@@ -23,13 +26,11 @@
     <td><%= user.first_name %></td>
     <td><%= user.last_name %></td>
     <td><%= user.telephone_number %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Edit', edit_user_path(user) %> | <%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New User', new_user_path %>
+<%= link_to 'Add New Entry', new_user_path %>

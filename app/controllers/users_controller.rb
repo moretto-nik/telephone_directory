@@ -1,28 +1,23 @@
-
 class UsersController < ApplicationController
-  # GET /users
-  # GET /users.json
-  def search(input)
-    User.all.each do |user|
-      if (user.first_name).include? input
-        @users = user
-      elsif (user.last_name).include? input
-        @users = user
-      elsif (user.telephone_number).include? input
-        @users = user
-    end
-
+  # GET /users/test
+  # GET /users/test.json
+  def test
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # test.html.erb
       format.json { render json: @users }
-    end
+    end    
   end
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
-
+    if(params[:input_search] != nil)
+      cond = "%"+params[:input_search]+"%"
+      @users = User.where("first_name like :input OR last_name like :input OR telephone_number like :input",:input=>cond)  
+    else
+      @users = User.all
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }
