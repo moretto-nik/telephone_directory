@@ -22,12 +22,7 @@
   </tr>
 
 <% @users.each do |user| %>
-  <tr>
-    <td><%= user.first_name %></td>
-    <td><%= user.last_name %></td>
-    <td><%= user.telephone_number %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %> | <%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+  <%=format_user(user).html_safe%>
 <% end %>
 </table>
 
